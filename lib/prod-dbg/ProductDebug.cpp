@@ -1,8 +1,8 @@
 /*
  * ProductDebug.cpp
  *
- *  Created on: 14.06.2016
- *      Author: nid
+ *  Created on: 19.01.2021
+ *      Author: Dieter Niklaus
  */
 
 #include <Arduino.h>
@@ -15,7 +15,7 @@ void setupProdDebugEnv()
 
   Serial.println();
   Serial.println("---------------------------------------------");
-  Serial.println("Hello from nRF52-test application!");
+  Serial.println("Hello from lights-on controller application!");
   Serial.println("---------------------------------------------");
   Serial.println();
 }

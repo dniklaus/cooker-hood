@@ -1,21 +1,11 @@
 /*
- * wiring-skeleton.cpp
+ * main.cpp
  *
- *  Created on: 15.03.2017
- *      Author: niklausd
+ *  Created on: 19.01.2021
+ *      Author: Dieter Niklaus
  */
 
 #include <Arduino.h>
-
-// patch for missing nRF52840DK pinmap
-#undef PIN_BUTTON1
-#undef PIN_BUTTON2
-#undef PIN_BUTTON3
-#undef PIN_BUTTON4
-#define PIN_BUTTON1          (0)  
-#define PIN_BUTTON2          (1)  
-#define PIN_BUTTON3          (12) 
-#define PIN_BUTTON4          (13) 
 
 // PlatformIO libraries
 #include <SerialCommand.h>  // pio lib install 173, lib details see https://github.com/kroimon/Arduino-SerialCommand
@@ -23,49 +13,47 @@
 
 // private libraries
 #include <ProductDebug.h>
-#include <Button.h>
-#include <DetectorStrategy.h>
 
 // local components (lib folder)
 #include <Indicator.h>
-#include <MyBuiltinLedIndicatorAdapter.h>
-#include <Button.h>
-#include <DetectorStrategy.h>
-#include <ButtonEdgeDetector.h>
-#include <MyButtonAdapter.h>
-#include <ArduinoDigitalInPinSupervisor.h>
+#include <MyLampAdapter.h>
 
 SerialCommand* sCmd = 0;
 
-// indicator implementation for built in LED
-Indicator* led1 = 0;
-Indicator* led2 = 0;
-Indicator* led3 = 0;
-Indicator* led4 = 0;
+// pointer to indicator object for built in LED
+Indicator* led = 0;
+
+// pointers to indicator objects for 4 lamps
+Indicator* lamp1 = 0;
+Indicator* lamp2 = 0;
+Indicator* lamp3 = 0;
+Indicator* lamp4 = 0;
 
 void setup()
 {
   // setup basic debug environment (heap usage printer, trace ports & dbg cli)
   setupProdDebugEnv();
 
-  // indicator LEDs
-  led1 = new Indicator("led1", "Built in LED1.");
-  led1->assignAdapter(new MyBuiltinLedIndicatorAdapter(1));
+  // indicator LED
+  led = new Indicator("led", "Built in LED.");
+  led->assignAdapter(new MyLampAdapter());
 
-  led2 = new Indicator("led2", "Built in LED2.");
-  led2->assignAdapter(new MyBuiltinLedIndicatorAdapter(2));
+  // 4 Lamps
+  lamp1 = new Indicator("lamp1", "Lamp 1.");
+  lamp1->clear();
+  lamp1->assignAdapter(new MyLampAdapter(1));
 
-  led3 = new Indicator("led3", "Built in LED3.");
-  led3->assignAdapter(new MyBuiltinLedIndicatorAdapter(3));
+  lamp2 = new Indicator("lamp2", "Lamp 2.");
+  lamp2->clear();
+  lamp2->assignAdapter(new MyLampAdapter(2));
 
-  led4 = new Indicator("led4", "Built in LED4.");
-  led4->assignAdapter(new MyBuiltinLedIndicatorAdapter(4));
+  lamp3 = new Indicator("lamp3", "Lamp 3.");
+  lamp3->clear();
+  lamp3->assignAdapter(new MyLampAdapter(3));
 
-  // Buttons
-  new Button(new ArduinoDigitalInPinSupervisor(PIN_BUTTON1), new ButtonEdgeDetector("btn1"), new MyButtonAdapter(led1));
-  new Button(new ArduinoDigitalInPinSupervisor(PIN_BUTTON2), new ButtonEdgeDetector("btn2"), new MyButtonAdapter(led2));
-  new Button(new ArduinoDigitalInPinSupervisor(PIN_BUTTON3), new ButtonEdgeDetector("btn3"), new MyButtonAdapter(led3));
-  new Button(new ArduinoDigitalInPinSupervisor(PIN_BUTTON4), new ButtonEdgeDetector("btn4"), new MyButtonAdapter(led4));
+  lamp4 = new Indicator("lamp4", "Lamp 4.");
+  lamp4->clear();
+  lamp4->assignAdapter(new MyLampAdapter(4));
 }
 
 void loop()
