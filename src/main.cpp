@@ -9,14 +9,14 @@
 
 // PlatformIO libraries
 #include <SerialCommand.h>  // pio lib install 173, lib details see https://github.com/kroimon/Arduino-SerialCommand
-#include <SpinTimer.h>      // pio lib install 1699, lib details see https://github.com/dniklaus/spin-timer
+#include <SpinTimer.h>      // pio lib install 11599, lib details see https://github.com/dniklaus/spin-timer
 
 // private libraries
 #include <ProductDebug.h>
 
 // local components (lib folder)
 #include <Indicator.h>
-#include <MyLampAdapter.h>
+#include <MyIndicatorAdapter.h>
 
 SerialCommand* sCmd = 0;
 
@@ -24,10 +24,10 @@ SerialCommand* sCmd = 0;
 Indicator* led = 0;
 
 // pointers to indicator objects for 4 lamps
-Indicator* lamp1 = 0;
-Indicator* lamp2 = 0;
-Indicator* lamp3 = 0;
-Indicator* lamp4 = 0;
+Indicator* lamp     = 0;
+Indicator* pwrcycle = 0;
+Indicator* reset   = 0;
+Indicator* relay4   = 0;
 
 void setup()
 {
@@ -36,24 +36,24 @@ void setup()
 
   // indicator LED
   led = new Indicator("led", "Built in LED.");
-  led->assignAdapter(new MyLampAdapter());
+  led->assignAdapter(new MyIndicatorAdapter());
 
   // 4 Lamps
-  lamp1 = new Indicator("lamp1", "Lamp 1.");
-  lamp1->clear();
-  lamp1->assignAdapter(new MyLampAdapter(1));
+  lamp = new Indicator("lamp", "Relay 1 - Lamp.");
+  lamp->clear();
+  lamp->assignAdapter(new MyIndicatorAdapter(1));
 
-  lamp2 = new Indicator("lamp2", "Lamp 2.");
-  lamp2->clear();
-  lamp2->assignAdapter(new MyLampAdapter(2));
+  pwrcycle = new Indicator("pwrcycle", "Relay 2 - Power Cycle.");
+  pwrcycle->clear();
+  pwrcycle->assignAdapter(new MyIndicatorAdapter(2));
 
-  lamp3 = new Indicator("lamp3", "Lamp 3.");
-  lamp3->clear();
-  lamp3->assignAdapter(new MyLampAdapter(3));
+  reset = new Indicator("reset", "Relay 3 - Reset Button.");
+  reset->clear();
+  reset->assignAdapter(new MyIndicatorAdapter(3));
 
-  lamp4 = new Indicator("lamp4", "Lamp 4.");
-  lamp4->clear();
-  lamp4->assignAdapter(new MyLampAdapter(4));
+  relay4 = new Indicator("relay4", "Relay 4.");
+  relay4->clear();
+  relay4->assignAdapter(new MyIndicatorAdapter(4));
 }
 
 void loop()
