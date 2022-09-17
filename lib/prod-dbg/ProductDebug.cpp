@@ -11,7 +11,7 @@
 
 void setupProdDebugEnv()
 {
-  setupDebugEnv();
+  setupDebugEnv('\0');
 
   Serial.println();
   Serial.println("---------------------------------------------");

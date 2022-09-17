@@ -43,15 +43,15 @@ void setup()
   lamp->clear();
   lamp->assignAdapter(new MyIndicatorAdapter(1));
 
-  pwrcycle = new Indicator("pwrcycle", "Relay 2 - Power Cycle.");
+  pwrcycle = new Indicator("fan1r", "Relay 2 - Power Cycle.");
   pwrcycle->clear();
   pwrcycle->assignAdapter(new MyIndicatorAdapter(2));
 
-  reset = new Indicator("reset", "Relay 3 - Reset Button.");
+  reset = new Indicator("fan2r", "Relay 3 - Reset Button.");
   reset->clear();
   reset->assignAdapter(new MyIndicatorAdapter(3));
 
-  relay4 = new Indicator("relay4", "Relay 4.");
+  relay4 = new Indicator("fan3r", "Relay 4.");
   relay4->clear();
   relay4->assignAdapter(new MyIndicatorAdapter(4));
 }
