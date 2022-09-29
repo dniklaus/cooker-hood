@@ -14,7 +14,7 @@ MuxedIndicatorPinAdapter::MuxedIndicatorPinAdapter(Indicator* enabler, int outPi
 , m_outPin(outPin)
 { }
 
-MuxedIndicatorPinAdapter::~MyIndicatorAdapter()
+MuxedIndicatorPinAdapter::~MuxedIndicatorPinAdapter()
 { }
 
 void MuxedIndicatorPinAdapter::setPinConfig()

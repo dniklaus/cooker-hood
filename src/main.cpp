@@ -20,7 +20,10 @@
 #include <Button.h>
 #include <EdgeDetector.h>
 #include <DetectorStrategy.h>
+#include <ButtonEdgeDetector.h>
+#include <MyButtonAdapter.h>
 #include <MuxedPinSupervisor.h>
+#include <MuxedIndicatorPinAdapter.h>
 
 SerialCommand* sCmd = 0;
 
@@ -72,25 +75,36 @@ void setup()
   fan3relay->clear();
   fan3relay->assignAdapter(new MyIndicatorAdapter(4));
 
-  lampLed = new Indicator("lampl", "LED 1 - Lamp.");
-
-  fan1Led = new Indicator("fan1l", "LED 2 - Fan 1.");
-
-  fan2Led = new Indicator("fan2l", "LED 3 - Fan 2.");
-
-  fan3Led = new Indicator("fan3l", "LED 4 - Fan 3.");
-
-  timerLed = new Indicator("timerl", "LED 5 - Timer.");
-
   ledEnable = new Indicator("ledEn", "LED enable control.");
   ledEnable->blinkTimer()->start(50);
-  ledEnable->blink();
+  ledEnable->clear();  // TODO: make this blink later (first: disable LEDs / enable buttons)
+  // TODO: assign MyIndicatorAdapter
 
-  lampButton  = new Button(new MuxedPinSupervisor(ledEnable, 12), new ButtonEdgeDetector(), new MyButtonAdapter());
-  fanLoButton = new Button(new MuxedPinSupervisor(ledEnable, 11), new ButtonEdgeDetector(), new MyButtonAdapter());
-  fanTgButton = new Button(new MuxedPinSupervisor(ledEnable, 10), new ButtonEdgeDetector(), new MyButtonAdapter());
-  fanHiButton = new Button(new MuxedPinSupervisor(ledEnable,  9), new ButtonEdgeDetector(), new MyButtonAdapter());
-  timerButton = new Button(new MuxedPinSupervisor(ledEnable,  8), new ButtonEdgeDetector(), new MyButtonAdapter());
+  lampLed = new Indicator("lampl", "LED 1 - Lamp.");
+  lampLed->clear();
+  lampLed->assignAdapter(new MuxedIndicatorPinAdapter(ledEnable, 1));
+
+  fan1Led = new Indicator("fan1l", "LED 2 - Fan 1.");
+  fan1Led->clear();
+  fan1Led->assignAdapter(new MuxedIndicatorPinAdapter(ledEnable, 1));
+
+  fan2Led = new Indicator("fan2l", "LED 3 - Fan 2.");
+  fan2Led->clear();
+  fan2Led->assignAdapter(new MuxedIndicatorPinAdapter(ledEnable, 1));
+
+  fan3Led = new Indicator("fan3l", "LED 4 - Fan 3.");
+  fan3Led->clear();
+  fan3Led->assignAdapter(new MuxedIndicatorPinAdapter(ledEnable, 1));
+
+  timerLed = new Indicator("timerl", "LED 5 - Timer.");
+  timerLed->clear();
+  timerLed->assignAdapter(new MuxedIndicatorPinAdapter(ledEnable, 1));
+
+  lampButton  = new Button(new MuxedPinSupervisor(ledEnable, 12), new ButtonEdgeDetector(), new MyButtonAdapter(lampLed));
+  fanLoButton = new Button(new MuxedPinSupervisor(ledEnable, 11), new ButtonEdgeDetector(), new MyButtonAdapter(fan1Led));
+  fanTgButton = new Button(new MuxedPinSupervisor(ledEnable, 10), new ButtonEdgeDetector(), new MyButtonAdapter(fan2Led));
+  fanHiButton = new Button(new MuxedPinSupervisor(ledEnable,  9), new ButtonEdgeDetector(), new MyButtonAdapter(fan3Led));
+  timerButton = new Button(new MuxedPinSupervisor(ledEnable,  8), new ButtonEdgeDetector(), new MyButtonAdapter(timerLed));
 }
 
 void loop()
