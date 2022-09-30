@@ -8,16 +8,8 @@
 #include <Arduino.h>
 #include "MyIndicatorAdapter.h"
 
-// Seeed Studio Relais Shield v3.0 Pinout
-const uint32_t MyIndicatorAdapter::cRelay1Pin = 7;
-const uint32_t MyIndicatorAdapter::cRelay2Pin = 6;
-const uint32_t MyIndicatorAdapter::cRelay3Pin = 5;
-const uint32_t MyIndicatorAdapter::cRelay4Pin = 4;
-
-const uint32_t MyIndicatorAdapter::cLedPin = LED_BUILTIN;  
-
-MyIndicatorAdapter::MyIndicatorAdapter(unsigned int index /* = 0 */)
-: m_outPin((index == 1) ? cRelay1Pin : (index == 2) ? cRelay2Pin : (index == 3) ? cRelay3Pin : (index == 4) ? cRelay4Pin : cLedPin)
+MyIndicatorAdapter::MyIndicatorAdapter(int outPin)
+: m_outPin(outPin)
 {
   // initialize built in LED pin as output
   pinMode(m_outPin, OUTPUT);

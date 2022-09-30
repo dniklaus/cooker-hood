@@ -16,20 +16,15 @@ class MyIndicatorAdapter: public AIndicatorAdapter
 public:
   /**
    * Constructor.
-   * @param index {0..4}, 0 : built-in LED, 1..4: Lamps 1..4
+   * @param outPin Output pin.
    */
-  MyIndicatorAdapter(unsigned int index = 0); 
+  MyIndicatorAdapter(int outPin); 
   virtual ~MyIndicatorAdapter();
   void notifyStatusChange(bool status);
 
 private:
   void setOutput(bool isOn);
-  const static uint32_t cLedPin;
-  const static uint32_t cRelay1Pin;
-  const static uint32_t cRelay2Pin;
-  const static uint32_t cRelay3Pin;
-  const static uint32_t cRelay4Pin;  
-  uint32_t m_outPin;
+  int m_outPin;
 
 private:  // forbidden default functions
   MyIndicatorAdapter(const MyIndicatorAdapter &other) = delete;
