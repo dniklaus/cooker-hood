@@ -23,14 +23,8 @@ void MyButtonAdapter::notifyStatusChanged(bool isActive)
     {
       switch (m_indicator->getState())
       {
-        case Indicator::EIndState::blink:
-          m_indicator->clear();
-          break;
         case Indicator::EIndState::off:
           m_indicator->set();
-          break;
-        case Indicator::EIndState::on:
-          m_indicator->blink();
           break;
         default:
           m_indicator->clear();
