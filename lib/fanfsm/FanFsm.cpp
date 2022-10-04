@@ -1,4 +1,6 @@
 #include <SpinTimer.h>
+#include <DbgTracePort.h>
+#include <DbgTraceLevel.h>
 
 #include "FanFsm.h"
 #include "FanFsmAction.h"
@@ -83,6 +85,10 @@ FanState* FanFsm::prevState()
 
 void FanFsm::fanLowEvent()
 {
+  if (0 != action())
+  {
+    TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Fan Lower Button pressed");
+  }
   if (0 != m_state)
   {
     m_state->fanLowEvent(this);
@@ -91,6 +97,10 @@ void FanFsm::fanLowEvent()
 
 void FanFsm::fanHighEvent()
 {
+  if (0 != action())
+  {
+    TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Fan Higher Button pressed");
+  }
   if (0 != m_state)
   {
     m_state->fanHighEvent(this);
@@ -99,6 +109,10 @@ void FanFsm::fanHighEvent()
 
 void FanFsm::fanToggleEvent()
 {
+  if (0 != action())
+  {
+    TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Fan Toggle Button pressed");
+  }
   if (0 != m_state)
   {
     m_state->fanToggleEvent(this);
@@ -107,6 +121,10 @@ void FanFsm::fanToggleEvent()
   
 void FanFsm::timerStartEvent(unsigned long fanOffTimeMillis /* = c_fanOffTimeMillis */)
 {
+  if (0 != action())
+  {
+    TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Fan Timer Button pressed");
+  }
   if (m_state == FanStateFan1::Instance() ||
       m_state == FanStateFan2::Instance() ||
       m_state == FanStateFan3::Instance())
@@ -117,6 +135,10 @@ void FanFsm::timerStartEvent(unsigned long fanOffTimeMillis /* = c_fanOffTimeMil
 
 void FanFsm::timerExpiredEvent()
 {
+  if (0 != action())
+  {
+    TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Fan Timer expired");
+  }
   if (0 != m_state)
   {
     m_state->timerExpiredEvent(this);
