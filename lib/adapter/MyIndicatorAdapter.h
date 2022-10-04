@@ -8,7 +8,6 @@
 #ifndef LIB_ADAPTER_MYINDICATORADAPTER_H_
 #define LIB_ADAPTER_MYINDICATORADAPTER_H_
 
-#include <stdint.h>
 #include <Indicator.h>
 
 class MyIndicatorAdapter: public AIndicatorAdapter
