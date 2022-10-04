@@ -36,8 +36,8 @@ MyFanFsmAction::~MyFanFsmAction()
 
 void MyFanFsmAction::actFan1()
 {
-  m_fan1Relay->clear();
-  m_fan2Relay->set();
+  m_fan1Relay->set();
+  m_fan2Relay->clear();
 }
 
 void MyFanFsmAction::actFan2()
@@ -48,8 +48,8 @@ void MyFanFsmAction::actFan2()
 
 void MyFanFsmAction::actFan3()
 {
-  m_fan1Relay->set();
-  m_fan2Relay->clear();
+  m_fan1Relay->clear();
+  m_fan2Relay->set();
 }
 
 void MyFanFsmAction::actFanOff()
