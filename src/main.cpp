@@ -11,17 +11,20 @@
 #include <SerialCommand.h>  // pio lib install 173, lib details see https://github.com/kroimon/Arduino-SerialCommand
 #include <SpinTimer.h>      // pio lib install 11599, lib details see https://github.com/dniklaus/spin-timer
 
-// private libraries
-#include <ProductDebug.h>
-
 // local components (lib folder)
 #include <Indicator.h>
-#include <MyIndicatorAdapter.h>
 #include <Button.h>
 #include <EdgeDetector.h>
 #include <DetectorStrategy.h>
+
+// private libraries
+#include <ProductDebug.h>
+#include <FanFsm.h>
+#include <MyFanFsmAction.h>
+#include <MyIndicatorAdapter.h>
 #include <ButtonEdgeDetector.h>
 #include <MyButtonAdapter.h>
+#include <MyFanButtonAdapter.h>
 #include <MuxedPinSupervisor.h>
 #include <MuxedIndicatorPinAdapter.h>
 
@@ -59,6 +62,8 @@ Button* fanLoButton  = 0;
 Button* fanTgButton  = 0;
 Button* fanHiButton  = 0;
 Button* timerButton  = 0;
+
+FanFsm* fanFsm = 0;
 
 void setup()
 {
@@ -111,11 +116,13 @@ void setup()
   timerLed->clear();
   timerLed->assignAdapter(new MuxedIndicatorPinAdapter(ledEnable, cTimerLedPin));
 
+  fanFsm = new FanFsm(new MyFanFsmAction(fan1relay, fan2relay, fan2relay));
+
   lampButton  = new Button(new MuxedPinSupervisor(ledEnable, cLampLedPin),  new ButtonEdgeDetector(), new MyButtonAdapter(lamprelay));
-  fanLoButton = new Button(new MuxedPinSupervisor(ledEnable, cFan1LedPin),  new ButtonEdgeDetector(), new MyButtonAdapter(fan1relay));
-  fanTgButton = new Button(new MuxedPinSupervisor(ledEnable, cFan2LedPin),  new ButtonEdgeDetector(), new MyButtonAdapter(fan2relay));
-  fanHiButton = new Button(new MuxedPinSupervisor(ledEnable, cFan3LedPin),  new ButtonEdgeDetector(), new MyButtonAdapter(fan3relay));
-  timerButton = new Button(new MuxedPinSupervisor(ledEnable, cTimerLedPin), new ButtonEdgeDetector(), new MyButtonAdapter(timerLed));
+  fanLoButton = new Button(new MuxedPinSupervisor(ledEnable, cFan1LedPin),  new ButtonEdgeDetector(), new MyFanLoButtonAdapter(fanFsm));
+  fanTgButton = new Button(new MuxedPinSupervisor(ledEnable, cFan2LedPin),  new ButtonEdgeDetector(), new MyFanTgButtonAdapter(fanFsm));
+  fanHiButton = new Button(new MuxedPinSupervisor(ledEnable, cFan3LedPin),  new ButtonEdgeDetector(), new MyFanHiButtonAdapter(fanFsm));
+  timerButton = new Button(new MuxedPinSupervisor(ledEnable, cTimerLedPin), new ButtonEdgeDetector(), new MyFanTimerButtonAdapter(fanFsm));
 }
 
 void loop()

@@ -5,8 +5,7 @@
  *      Author: dev
  */
 
-#ifndef LIB_ADAPTER_MYBUTTONADAPTER_H_
-#define LIB_ADAPTER_MYBUTTONADAPTER_H_
+#pragma once
 
 #include <stdint.h>
 #include <Button.h>
@@ -19,8 +18,6 @@ public:
 
   void notifyStatusChanged(bool isActive);
 
-  const static uint32_t cButtonPin;
-
 private:
   Indicator* m_indicator;
 
@@ -29,6 +26,3 @@ private:  // forbidden functions
   MyButtonAdapter(const MyButtonAdapter& src);              // copy constructor
   MyButtonAdapter& operator = (const MyButtonAdapter& src); // assignment operator
 };
-
-
-#endif /* LIB_ADAPTER_MYBUTTONADAPTER_H_ */
