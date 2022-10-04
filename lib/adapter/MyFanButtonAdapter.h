@@ -3,6 +3,7 @@
 #include <Button.h>
 
 class FanFsm;
+class DbgTrace_Port;
 
 //-----------------------------------------------------------------------------
 
@@ -16,6 +17,7 @@ public:
 
 private:
   FanFsm* m_fanFsm;
+  DbgTrace_Port* m_trPort;
 
 private:  // forbidden functions
   MyFanLoButtonAdapter();                                             // default constructor
@@ -35,6 +37,7 @@ public:
 
 private:
   FanFsm* m_fanFsm;
+  DbgTrace_Port* m_trPort;
 
 private:  // forbidden functions
   MyFanHiButtonAdapter();                                             // default constructor
@@ -54,6 +57,7 @@ public:
 
 private:
   FanFsm* m_fanFsm;
+  DbgTrace_Port* m_trPort;
 
 private:  // forbidden functions
   MyFanTgButtonAdapter();                                             // default constructor
@@ -62,7 +66,6 @@ private:  // forbidden functions
 };
 
 //-----------------------------------------------------------------------------
-
 class MyFanTimerButtonAdapter : public ButtonAdapter
 {
 public:
@@ -73,6 +76,7 @@ public:
 
 private:
   FanFsm* m_fanFsm;
+  DbgTrace_Port* m_trPort;
 
 private:  // forbidden functions
   MyFanTimerButtonAdapter();                                                // default constructor

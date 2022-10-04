@@ -7,9 +7,9 @@
 
 #pragma once
 
-#include <stdint.h>
 #include <Button.h>
 
+class DbgTrace_Port;
 class MyButtonAdapter : public ButtonAdapter
 {
 public:
@@ -20,6 +20,7 @@ public:
 
 private:
   Indicator* m_indicator;
+  DbgTrace_Port* m_trPort;
 
 private:  // forbidden functions
   MyButtonAdapter();                                        // default constructor
