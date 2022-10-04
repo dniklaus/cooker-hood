@@ -11,6 +11,7 @@ public:
   virtual ~FanFsm();
 
   FanFsmAction* action();
+  SpinTimer* timer();
 
   void changeState(FanState* newState);
   FanState* state();
@@ -19,7 +20,7 @@ public:
   void fanLowEvent();
   void fanHighEvent();
   void fanToggleEvent();
-  void timerStartEvent();
+  void timerStartEvent(unsigned long fanOffTimeMillis = c_fanOffTimeMillis);
   void timerExpiredEvent();
 
 private:

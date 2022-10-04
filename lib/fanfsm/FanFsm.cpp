@@ -40,7 +40,12 @@ FanFsm::FanFsm(FanFsmAction* action)
 , m_prevState(FanStateFan1Off::Instance())
 , m_action(action)
 , m_timer(new SpinTimer(FanFsm::c_fanOffTimeMillis, new FanSpinTimerAction(this), SpinTimer::IS_NON_RECURRING, SpinTimer::IS_NON_AUTOSTART))
-{ }
+{ 
+  if (0 != action)
+  {
+    action->attachFsm(this);
+  }
+}
 
 FanFsm::~FanFsm()
 { }
@@ -48,6 +53,11 @@ FanFsm::~FanFsm()
 FanFsmAction* FanFsm::action()
 {
   return m_action;
+}
+
+SpinTimer* FanFsm::timer()
+{
+  return m_timer;
 }
 
 void FanFsm::changeState(FanState* newState)
@@ -95,9 +105,14 @@ void FanFsm::fanToggleEvent()
   }
 }
   
-void FanFsm::timerStartEvent()
+void FanFsm::timerStartEvent(unsigned long fanOffTimeMillis /* = c_fanOffTimeMillis */)
 {
-  m_timer->start();
+  if (m_state == FanStateFan1::Instance() ||
+      m_state == FanStateFan2::Instance() ||
+      m_state == FanStateFan3::Instance())
+  {
+    m_timer->start(fanOffTimeMillis);
+  }
 }
 
 void FanFsm::timerExpiredEvent()

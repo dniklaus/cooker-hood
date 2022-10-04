@@ -3,6 +3,7 @@
 #include <FanFsmAction.h>
 
 class Indicator;
+class DbgCli_Command;
 
 class MyFanFsmAction : public FanFsmAction
 {
@@ -19,6 +20,11 @@ private:
   Indicator* m_fan1Relay;
   Indicator* m_fan2Relay;
   Indicator* m_fan3Relay;
+
+  DbgCli_Command* m_fanFsmEvtLowerEvtCmd;
+  DbgCli_Command* m_fanFsmEvtHigherEvtCmd;
+  DbgCli_Command* m_fanFsmEvtToggleEvtCmd;
+  DbgCli_Command* m_fanFsmEvtTimerEvtCmd;
 
 private:  // forbidden default functions
   MyFanFsmAction();                                       // default constructor

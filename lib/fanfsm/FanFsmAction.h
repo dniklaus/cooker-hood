@@ -1,6 +1,7 @@
 #pragma once
 
 class DbgTrace_Port;
+class FanFsm;
 
 class FanFsmAction
 {
@@ -12,6 +13,9 @@ public:
 
   DbgTrace_Port* trPort();
 
+  void attachFsm(FanFsm* fanFsm);
+  FanFsm* fanFsm();
+
   virtual void actFan1() = 0;
   virtual void actFan2() = 0;
   virtual void actFan3() = 0;
@@ -19,6 +23,7 @@ public:
 
 private:
   DbgTrace_Port* m_trPort;
+  FanFsm* m_fanFsm;
 
 private:  // forbidden default functions
   FanFsmAction(const FanFsmAction& src);              // copy constructor

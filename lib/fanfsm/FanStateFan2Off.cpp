@@ -1,3 +1,4 @@
+#include <SpinTimer.h>
 #include "FanFsm.h"
 #include "FanFsmAction.h"
 #include "FanState.h"
@@ -22,6 +23,7 @@ FanState* FanStateFan2Off::Instance()
 void FanStateFan2Off::entry(FanFsm* fanFsm)
 {
   FanState::entry(fanFsm);
+  fanFsm->timer()->cancel();
   if (0 != fanFsm->action())
   {
     fanFsm->action()->actFanOff();
