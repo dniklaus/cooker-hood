@@ -36,6 +36,7 @@ public:
 //-----------------------------------------------------------------------------
 
 const unsigned long FanFsm::c_fanOffTimeMillis = 1800000;  // 30 Minutes
+// const unsigned long FanFsm::c_fanOffTimeMillis = 30000;  // 30 Seconds
 
 FanFsm::FanFsm(FanFsmAction* action)
 : m_state(FanStateFan1Off::Instance())
@@ -127,9 +128,18 @@ void FanFsm::timerStartEvent(unsigned long fanOffTimeMillis /* = c_fanOffTimeMil
   }
   if (m_state == FanStateFan1::Instance() ||
       m_state == FanStateFan2::Instance() ||
-      m_state == FanStateFan3::Instance())
+      m_state == FanStateFan3::Instance()   )
   {
     m_timer->start(fanOffTimeMillis);
+    if (0 != action())
+    {
+      TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Timer started with %lu ms", fanOffTimeMillis);
+    }
+  }
+  else if (0 != action())
+  {
+    TR_PRINTF(action()->trPort(), DbgTrace_Level::info, "Fan Fsm Evt: Timer not started (inhibit by state %s)", 
+                                  m_state->toString());
   }
 }
 

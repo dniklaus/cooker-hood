@@ -22,11 +22,11 @@ void DbgCmd_FanTimerEvt::execute(unsigned int argc, const char** args, unsigned 
   }
   else
   {
-    TR_PRINTF(m_fanFsmAction->trPort(), DbgTrace_Level::info, "Fan Fsm: emulate Fan Timer Button pressed event");
     if (0 != m_fanFsmAction)
     {
       if (0 != m_fanFsmAction->fanFsm())
       {
+        TR_PRINTF(m_fanFsmAction->trPort(), DbgTrace_Level::info, "Fan Fsm: emulate Fan Timer Button pressed event");
         m_fanFsmAction->fanFsm()->timerStartEvent(5000);
       }
     }
