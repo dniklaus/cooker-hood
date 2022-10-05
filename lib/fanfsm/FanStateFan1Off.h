@@ -11,7 +11,7 @@ public:
   static FanState* Instance();
   virtual ~FanStateFan1Off() { }
 
-  void fanLowEvent(FanFsm* fanFsm);
+  void fanLowEvent(FanFsm* fanFsm) { }
   void fanHighEvent(FanFsm* fanFsm);
   void fanToggleEvent(FanFsm* fanFsm);
   void timerExpiredEvent(FanFsm* fanFsm) { }

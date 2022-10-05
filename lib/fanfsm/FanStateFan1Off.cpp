@@ -35,11 +35,6 @@ const char* FanStateFan1Off::toString()
   return "FanStateFan1Off";
 }
 
-void FanStateFan1Off::fanLowEvent(FanFsm* fanFsm)
-{
-  fanFsm->changeState(FanStateFan1::Instance());
-}
-
 void FanStateFan1Off::fanHighEvent(FanFsm* fanFsm)
 {
   fanFsm->changeState(FanStateFan1::Instance());
